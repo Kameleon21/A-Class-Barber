@@ -44,4 +44,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## 👀 Want to learn more?
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Iconify
+Iconify is a library of icons for web development.
+To use Iconify icons in your Astro project, you can install the `astro-icon` package and use the `Icon` component.
+

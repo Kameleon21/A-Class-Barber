@@ -1,5 +1,5 @@
 ---
-
+import { Icon } from 'astro-icon/components';
 ---
 
 <html lang="en">
@@ -8,9 +8,15 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
 		<title>Astro</title>
 	</head>
 	<body>
 		<h1>Test out Development Branch</h1>
+		<Icon name="mdi:twitter" class="text-2xl text-blue-500" />
+		<Icon name="mdi:instagram" class="text-2xl text-pink-500" />
 	</body>
 </html>
