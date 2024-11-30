@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Header from '../components/Header.astro';
 ---
 
 <html lang="en">
@@ -14,9 +15,7 @@ import { Icon } from 'astro-icon/components';
 		<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
 		<title>Astro</title>
 	</head>
-	<body>
-		<h1>Test out Development Branch</h1>
-		<Icon name="mdi:twitter" class="text-2xl text-blue-500" />
-		<Icon name="mdi:instagram" class="text-2xl text-pink-500" />
+	<body class="bg-primary text-secondary">
+		<Header />
 	</body>
 </html>

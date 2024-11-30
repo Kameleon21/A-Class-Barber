@@ -1,0 +1,88 @@
+---
+// Import useState if you want to handle the menu state in Astro
+---
+
+<header class="w-full bg-black text-white px-4 sm:px-8 py-6">
+    <div class="max-w-[1920px] mx-auto flex items-center justify-between">
+        {/* Logo - left on mobile, center on medium+ screens */}
+        <div class="flex items-center md:absolute md:left-1/2 md:-translate-x-1/2">
+            <a href="/" class="inline-block">
+                <img 
+                    src="/images/aClassLogo.png" 
+                    alt="Logo" 
+                    class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24" 
+                />
+            </a>
+        </div>
+
+        {/* Hamburger menu button - only visible on small screens */}
+        <button id="menu-toggle" class="md:hidden text-white z-10" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+
+        {/* Mobile menu - hidden by default */}
+        <div id="mobile-menu" class="fixed inset-0 bg-secondary/70 text-primary backdrop-blur-sm z-50 hidden transition-all duration-300">
+            <div class="flex flex-col items-center justify-center h-full">
+                <button id="close-menu" class="absolute top-6 right-8 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <nav class="flex flex-col gap-8 text-center">
+                    <a href="/" class="text-2xl hover:text-tertiary transition-colors">Home</a>
+                    <a href="/about" class="text-2xl hover:text-tertiary transition-colors">About</a>
+                    <a href="/services" class="text-2xl hover:text-tertiary transition-colors">Services</a>
+                    <a href="/community" class="text-2xl hover:text-tertiary transition-colors">Community</a>
+                    <a href="/reviews" class="text-2xl hover:text-tertiary transition-colors">Reviews</a>
+                    <a href="/contact" class="text-2xl hover:text-tertiary transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+
+        {/* Desktop/Tablet navigation - hidden on mobile */}
+        <div class="hidden md:flex items-center justify-between w-full">
+            {/* Left nav */}
+            <nav class="flex gap-8 lg:gap-16">
+                <a href="/" class="text-lg lg:text-xl hover:text-gray-300 transition-colors">Home</a>
+                <a href="/about" class="text-lg lg:text-xl hover:text-gray-300 transition-colors">About</a>
+                <a href="/services" class="text-lg lg:text-xl hover:text-gray-300 transition-colors">Services</a>
+            </nav>
+
+            {/* Right nav */}
+            <nav class="flex gap-8 lg:gap-16">
+                <a href="/community" class="text-lg lg:text-xl hover:text-gray-300 transition-colors">Community</a>
+                <a href="/reviews" class="text-lg lg:text-xl hover:text-gray-300 transition-colors">Reviews</a>
+                <a href="/contact" class="text-lg lg:text-xl hover:text-gray-300 transition-colors">Contact</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const closeMenu = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuToggle?.addEventListener('click', () => {
+        mobileMenu?.classList.remove('hidden');
+        mobileMenu?.classList.add('opacity-100');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeMenu?.addEventListener('click', () => {
+        mobileMenu?.classList.add('hidden');
+        mobileMenu?.classList.remove('opacity-100');
+        document.body.style.overflow = '';
+    });
+
+    const mobileLinks = mobileMenu?.querySelectorAll('a');
+    mobileLinks?.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu?.classList.add('hidden');
+            mobileMenu?.classList.remove('opacity-100');
+            document.body.style.overflow = '';
+        });
+    });
+</script>

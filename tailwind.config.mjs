@@ -6,6 +6,11 @@ export default {
 			fontFamily: {
 				serif: ['Crimson Text', 'serif'],
 			},
+			colors: {
+				primary: '#000000',
+				secondary: '#C2C0C0',
+				tertiary: '#B7894E',
+			},
 		},
 	},
 	plugins: [],
