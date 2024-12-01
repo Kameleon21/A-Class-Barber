@@ -1,0 +1,31 @@
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    transform-origin: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger-top {
+    transform: translateY(-8px);
+}
+
+.hamburger-bottom {
+    transform: translateY(8px);
+}
+
+/* Open state */
+.open .hamburger-top {
+    transform: rotate(45deg);
+}
+
+.open .hamburger-middle {
+    opacity: 0;
+}
+
+.open .hamburger-bottom {
+    transform: rotate(-45deg);
+} 
