@@ -1,0 +1,129 @@
+<section id="services" class="w-full bg-secondary text-primary py-20">
+    <div class="max-w-[1920px] mx-auto px-4 sm:px-8">
+        <div class="text-center mb-16 relative flex flex-col items-center gap-4">
+            <span class="w-32 h-0.5 bg-tertiary"></span>
+            <h2 class="text-4xl md:text-5xl font-serif font-extrabold text-tertiary">
+                Services
+            </h2>
+            <span class="w-32 h-0.5 bg-tertiary"></span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            {/* Hair Services */}
+            <div class="space-y-8">
+                <h3 class="text-3xl font-extrabold font-serif text-primary relative inline-block">
+                    Hair
+                    <span class="absolute -bottom-2 left-0 w-full h-0.5 bg-tertiary"></span>
+                </h3>
+                <div class="space-y-4">
+                    {/* Hair service items with tooltips */}
+                    {[
+                        { name: "One Number All Over", price: "€10" },
+                        { name: "Kids Under 12 & Seniors", price: "€14" },
+                        { name: "Skin Fade With Foiler U14", price: "€18" },
+                        { name: "Skin Fade With Foiler", price: "€20" },
+                        { name: "Head Shave With Foil", price: "€15" },
+                        { name: "Head Shave With Foil & Hot Towel", price: "€20" }
+                    ].map(service => (
+                        <div class="flex justify-between items-center group relative">
+                            <span class="text-xl">{service.name}</span>
+                            <span class="text-xl">{service.price}</span>
+                            {/* <div class="absolute hidden group-hover:block bg-primary text-white p-4 rounded-lg shadow-lg -top-20 left-0 w-64 z-10">
+                                <div class="text-sm space-y-2">
+                                    <p>• </p>
+                                    <p>• </p>
+                                </div>
+                                <div class="absolute -bottom-2 left-4 w-4 h-4 bg-primary transform rotate-45"></div>
+                            </div> */}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Beard Services */}
+            <div class="space-y-8">
+                <h3 class="text-3xl font-extrabold font-serif text-primary relative inline-block">
+                    Beard
+                    <span class="absolute -bottom-2 left-0 w-full h-0.5 bg-tertiary"></span>
+                </h3>
+                <div class="space-y-4">
+                    {/* Beard service items with tooltips */}
+                    {[
+                        { name: "One Number All Over", price: "€8" },
+                        { name: "Beard Trim & Shape Up", price: "€12" },
+                        { name: "Beard Trim & Shape Up With Blade", price: "€15" },
+                        { name: "A-Class Hot Towel Shave", price: "€25" }
+                    ].map(service => (
+                        <div class="flex justify-between items-center group relative">
+                            <span class="text-xl">{service.name}</span>
+                            <span class="text-xl">{service.price}</span>
+                            {/* <div class="absolute hidden group-hover:block bg-primary text-white p-4 rounded-lg shadow-lg -top-20 left-0 w-64 z-10">
+                                <div class="text-sm space-y-2">
+                                    <p>• </p>
+                                    <p>• </p>
+                                </div>
+                                <div class="absolute -bottom-2 left-4 w-4 h-4 bg-primary transform rotate-45"></div>
+                            </div> */}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Extra Services */}
+            <div class="space-y-8">
+                <h3 class="text-3xl font-extrabold font-serif text-primary relative inline-block">
+                    Extra Services
+                    <span class="absolute -bottom-2 left-0 w-full h-0.5 bg-tertiary"></span>
+                </h3>
+                <div class="space-y-4">
+                    {/* Extra service items with tooltips */}
+                    {[
+                        { name: "Nose Wax", price: "€7", tooltip: "• Nose Wax, choice of wax" },
+                        { name: "Ear Candles", price: "€14", tooltip: "• Ear Candles, delivery only" },
+                        { name: "Facial Hair", price: "€14", tooltip: "• Facial Hair, choose between beard or moustache" }
+                    ].map(service => (
+                        <div class="flex justify-between items-center group relative">
+                            <span class="text-xl">{service.name}</span>
+                            <span class="text-xl">{service.price}</span>
+                            {/* <div class="absolute hidden group-hover:block bg-primary text-white p-4 rounded-lg shadow-lg -top-20 left-0 w-64 z-10">
+                                <div class="text-sm space-y-2">
+                                    <p>{service.tooltip}</p>
+                                </div>
+                                <div class="absolute -bottom-2 left-4 w-4 h-4 bg-primary transform rotate-45"></div>
+                            </div> */}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Deals */}
+            <div class="space-y-8">
+                <h3 class="text-3xl font-extrabold font-serif text-primary relative inline-block">
+                    Deals
+                    <span class="absolute -bottom-2 left-0 w-full h-0.5 bg-tertiary"></span>
+                </h3>
+                <div class="space-y-4">
+                    {/* Deals items with tooltips */}
+                    {[
+                        { name: "Choose Any Hair & Beard Service", price: "€5 off" },
+                        { name: "Dad & Son Service", price: "€4 off" },
+                        { name: "Add Any Extra Service", price: "€5 off" },
+                        { name: "Back & Sides Only", price: "€2 off" }
+                    ].map(service => (
+                        <div class="flex justify-between items-center group relative">
+                            <span class="text-xl">{service.name}</span>
+                            <span class="text-xl">{service.price}</span>
+                            {/* <div class="absolute hidden group-hover:block bg-primary text-white p-4 rounded-lg shadow-lg -top-20 left-0 w-64 z-10">
+                                <div class="text-sm space-y-2">
+                                    <p>• </p>
+                                    <p>• </p>
+                                </div>
+                                <div class="absolute -bottom-2 left-4 w-4 h-4 bg-primary transform rotate-45"></div>
+                            </div> */}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
