@@ -1,0 +1,45 @@
+---
+import Header from './Header.astro';
+import { Image } from 'astro:assets';
+import hero from '../assets/image-19.jpg';
+---
+
+<section class="relative w-full h-screen bg-black">
+    <Header />
+    
+    {/* Background image with overlay */}
+    <div class="absolute inset-0">
+        <Image 
+            src={hero}
+            alt="Hero background"
+            width={1920}
+            height={1080}   
+            class="absolute inset-0 w-full h-full object-top object-cover opacity-50"
+        />
+        <div class="absolute inset-0 bg-black/30"></div>
+    </div>
+
+    {/* Content */}
+    <div class="relative h-full max-w-[1920px] mx-auto flex flex-col items-center">
+        {/* Main content - centered */}
+        <div class="flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-8">
+            {/* Main heading */}
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 text-white">
+                At A-Class
+            </h1>
+
+            {/* Subheading */}
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif text-tertiary mb-12">
+                We Do Class
+            </h2>
+
+            {/* CTA Button */}
+            <a 
+                href="/awards" 
+                class="px-8 py-4 border-4 border-tertiary bg-tertiary/50 text-secondary transition-all duration-300 ease-in-out text-xl md:text-2xl hover:scale-110"
+            >
+                View Our Awards
+            </a>
+        </div>
+    </div>
+</section> 

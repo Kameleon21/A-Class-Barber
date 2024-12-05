@@ -1,20 +1,13 @@
 ---
-import { Icon } from 'astro-icon/components';
-import Header from '../components/Header.astro';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Gallery from '../components/Gallery.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/images/aClassLogo.png" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
-		<title>A-Class Barbers</title>
-	</head>
-	<body class="bg-primary text-secondary">
-		<Header />
-	</body>
-</html>
+<Layout title="A-Class Turkish Barbers">
+    <main class="relative">
+        <Hero />
+        <Gallery /> 
+        {/* Other content */}
+    </main>
+</Layout>
