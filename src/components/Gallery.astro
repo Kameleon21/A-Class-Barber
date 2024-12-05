@@ -14,9 +14,9 @@ const galleryImages = [image1, image2, image3, image4, image5];
         <h2 class="text-4xl md:text-5xl font-serif text-white text-center mb-16">Gallery</h2>
         
         <div class="gallery-container overflow-hidden relative">
-            <div class="gallery-track flex gap-6 cursor-pointer">
+            <div class="gallery-track flex gap-6 cursor-pointer whitespace-nowrap">
                 {galleryImages.map((image, index) => (
-                    <div class="gallery-item min-w-[300px] md:min-w-[400px] aspect-square rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300">
+                    <div class="gallery-item min-w-[260px] md:min-w-[400px] aspect-square rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 inline-block">
                         <Image 
                             src={image} 
                             alt={`Gallery image ${index + 1}`}
@@ -46,13 +46,13 @@ const galleryImages = [image1, image2, image3, image4, image5];
 
     @keyframes scroll {
         0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-100% - 1.5rem)); }
+        100% { transform: translateX(calc(-260px * 5 - 1.5rem * 5)); }
     }
 
-    /* Faster animation for mobile */
-    @media (max-width: 768px) {
-        .gallery-track {
-            animation: scroll 12s linear infinite;
+    @media (min-width: 768px) {
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-400px * 5 - 1.5rem * 5)); }
         }
     }
 </style>
