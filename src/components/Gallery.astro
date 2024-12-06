@@ -1,12 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import image1 from '../assets/image-1.jpg';
-import image2 from '../assets/image-2.jpg';
-import image3 from '../assets/image-3.jpg';
+import image2 from '../assets/image-6.jpg';
+import image3 from '../assets/hero.jpg';
 import image4 from '../assets/image-4.jpg';
-import image5 from '../assets/image-5.jpg';
+import image5 from '../assets/image-9.jpg';
+import image6 from '../assets/image-16.jpg';
 
-const galleryImages = [image1, image2, image3, image4, image5];
+const galleryImages = [image1, image2, image3, image4, image5, image6];
 ---
 
 <section class="w-full bg-black py-20">
@@ -19,13 +20,14 @@ const galleryImages = [image1, image2, image3, image4, image5];
                     <div class="gallery-item min-w-[260px] md:min-w-[400px] aspect-square rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 inline-block">
                         <Image 
                             src={image} 
-                            alt={`Gallery image ${index + 1}`}
+                            alt={`Gallery ${index + 1}`}
                             width={400}
                             height={400}
-                            loading={index < 3 ? "eager" : "lazy"}
+                            loading="lazy"
                             format="webp"
                             quality={75}
                             class="w-full h-full object-cover"
+                            decoding="async"
                         />
                     </div>
                 ))}
@@ -36,34 +38,97 @@ const galleryImages = [image1, image2, image3, image4, image5];
 
 <style>
     .gallery-track {
-        animation: scroll 30s linear infinite;
         will-change: transform;
     }
 
     .gallery-track:hover {
-        animation-play-state: paused;
-    }
-
-    @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-260px * 5 - 1.5rem * 5)); }
-    }
-
-    @media (min-width: 768px) {
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-400px * 5 - 1.5rem * 5)); }
-        }
+        /* We'll handle this in JS too */
     }
 </style>
 
 <script>
-    // Defer cloning until after initial page load
     window.addEventListener('load', () => {
-        const track = document.querySelector('.gallery-track');
-        if (track) {
-            const clone = track.innerHTML;
-            track.innerHTML = clone + clone;
+        const track = document.querySelector('.gallery-track') as HTMLElement;
+        if (!track) return;
+
+        let animationFrameId: number | null = null;
+        let isPaused = false;
+        let scrollPosition = 0;
+
+        function initializeGallery() {
+            // Reset existing state
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            scrollPosition = 0;
+            track.style.transform = 'translateX(0)';
+
+            // Remove any previously cloned items
+            while (track.children.length > 6) { // 6 is the original number of images
+                track.removeChild(track.lastChild!);
+            }
+
+            // Get dimensions after any possible layout shifts
+            const items = track.children;
+            const gap = 24; // 1.5rem = 24px
+            const itemWidth = (items[0] as HTMLElement).offsetWidth + gap;
+            
+            // Clone enough items to fill the screen width plus buffer
+            const viewportWidth = window.innerWidth;
+            const itemsNeeded = Math.ceil((viewportWidth * 2) / itemWidth);
+            
+            // Clone items
+            for (let i = 0; i < itemsNeeded; i++) {
+                const index = i % items.length;
+                track.appendChild(items[index].cloneNode(true));
+            }
+
+            function animate() {
+                if (!isPaused) {
+                    // Adjust speed based on screen size
+                    const speed = window.innerWidth < 768 ? 1 : 2;
+                    scrollPosition -= speed;
+                    track.style.transform = `translateX(${scrollPosition}px)`;
+
+                    if (Math.abs(scrollPosition) >= itemWidth) {
+                        scrollPosition += itemWidth;
+                        track.style.transform = `translateX(${scrollPosition}px)`;
+                        
+                        const firstItem = track.children[0];
+                        track.appendChild(firstItem.cloneNode(true));
+                        track.removeChild(firstItem);
+                    }
+                }
+                animationFrameId = requestAnimationFrame(animate);
+            }
+
+            // Start animation
+            animate();
         }
+
+        // Initialize gallery
+        initializeGallery();
+
+        // Handle hover/touch events
+        track.addEventListener('mouseenter', () => isPaused = true);
+        track.addEventListener('mouseleave', () => isPaused = false);
+        track.addEventListener('touchstart', () => isPaused = true);
+        track.addEventListener('touchend', () => isPaused = false);
+
+        // Reinitialize on resize with debounce
+        let resizeTimeout: number;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(initializeGallery, 250) as unknown as number;
+        });
+
+        // Cleanup
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            } else {
+                initializeGallery();
+            }
+        });
     });
 </script> 
