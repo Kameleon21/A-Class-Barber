@@ -13,8 +13,22 @@ import Header from '../components/Header.astro';
             </div>
             
             <div class="flex flex-col gap-12">
-                {/* Opening Hours */}
-                <div>
+                {/* Contact Details - Shows first on mobile */}
+                <div class="order-1 md:order-none">
+                    <div class="space-y-4 max-w-md mx-auto">
+                        <div class="flex items-center gap-4">
+                            <Icon name="mdi:map-marker" class="w-6 h-6 text-[#c19d65]" />
+                            <span>3 Conduit Ln, Waterford, E91 EY05</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <Icon name="mdi:phone" class="w-6 h-6 text-[#c19d65]" />
+                            <a href="tel:083125608" class="hover:text-[#c19d65] transition-colors">083 125 6089</a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Opening Hours - Second on mobile */}
+                <div class="order-2 md:order-none">
                     <h2 class="text-2xl font-serif font-bold mb-6 text-center">Opening Hours</h2>
                     <div class="space-y-3 max-w-md mx-auto">
                         <div class="flex justify-between border-b border-gray-700 pb-2">
@@ -48,8 +62,8 @@ import Header from '../components/Header.astro';
                     </div>
                 </div>
 
-                {/* Map Section */}
-                <div>
+                {/* Map Section - Third on mobile */}
+                <div class="order-3 md:order-none">
                     <h2 class="text-2xl font-serif font-bold mb-6 text-center">Find Us</h2>
                     <div class="w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden">
                         <iframe 
@@ -64,34 +78,19 @@ import Header from '../components/Header.astro';
                     </div>
                 </div>
 
-                {/* Contact Details and Socials */}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Contact Details */}
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <Icon name="mdi:map-marker" class="w-6 h-6 text-[#c19d65]" />
-                            <span>3 Conduit Ln, Waterford, E91 EY05</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <Icon name="mdi:phone" class="w-6 h-6 text-[#c19d65]" />
-                            <a href="tel:083125608" class="hover:text-[#c19d65] transition-colors">083 125 6089</a>
-                        </div>
-                    </div>
-
-                    {/* Social Links */}
-                    <div>
-                        <h2 class="text-2xl font-serif font-bold mb-6">Follow Us On Socials</h2>
-                        <div class="flex gap-6">
-                            <a href="https://www.tiktok.com/@aclassturkishbarber?lang=en" class="text-[#c19d65] hover:text-[#d4b684] transition-colors" target="_blank">
-                                <Icon name="ic:baseline-tiktok" class="w-8 h-8" />
-                            </a>
-                            <a href="https://www.instagram.com/aclass_turkish_barbers/?igsh=MWI2aThydHN2M2F0YQ%3D%3D&utm_source=qr" class="text-[#c19d65] hover:text-[#d4b684] transition-colors" target="_blank">
-                                <Icon name="mdi:instagram" class="w-8 h-8" />
-                            </a>
-                            <a href="https://www.facebook.com/Aclassturkishbarbers/" class="text-[#c19d65] hover:text-[#d4b684] transition-colors" target="_blank">
-                                <Icon name="mdi:facebook" class="w-8 h-8" />
-                            </a>
-                        </div>
+                {/* Social Links - Last on mobile and centered */}
+                <div class="order-4 md:order-none flex flex-col items-center">
+                    <h2 class="text-2xl font-serif font-bold mb-6">Follow Us On Socials</h2>
+                    <div class="flex gap-6">
+                        <a href="https://www.tiktok.com/@aclassturkishbarber?lang=en" class="text-[#c19d65] hover:text-[#d4b684] transition-colors" target="_blank">
+                            <Icon name="ic:baseline-tiktok" class="w-8 h-8" />
+                        </a>
+                        <a href="https://www.instagram.com/aclass_turkish_barbers/?igsh=MWI2aThydHN2M2F0YQ%3D%3D&utm_source=qr" class="text-[#c19d65] hover:text-[#d4b684] transition-colors" target="_blank">
+                            <Icon name="mdi:instagram" class="w-8 h-8" />
+                        </a>
+                        <a href="https://www.facebook.com/Aclassturkishbarbers/" class="text-[#c19d65] hover:text-[#d4b684] transition-colors" target="_blank">
+                            <Icon name="mdi:facebook" class="w-8 h-8" />
+                        </a>
                     </div>
                 </div>
             </div>
