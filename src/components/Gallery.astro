@@ -7,6 +7,7 @@ import image4 from '../assets/image-4.jpg';
 import image5 from '../assets/image-9.jpg';
 import image6 from '../assets/image-16.jpg';
 import { Icon } from 'astro-icon/components';
+import '../styles/gallery.css';
 
 const galleryImages = [image1, image2, image3, image4, image5, image6];
 const doubledImages = [...galleryImages, ...galleryImages];
@@ -16,7 +17,7 @@ const doubledImages = [...galleryImages, ...galleryImages];
     <div class="max-w-[1920px] mx-auto px-4 sm:px-8">
         <h2 class="text-4xl md:text-5xl font-serif font-extrabold text-white text-center mb-16">Gallery</h2>
         
-        <div class="gallery-container overflow-hidden relative">
+        <div class="gallery-container">
             <button 
                 class="gallery-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-r-lg transition-colors"
                 aria-label="Previous"
@@ -24,21 +25,17 @@ const doubledImages = [...galleryImages, ...galleryImages];
                 <Icon name="mdi:chevron-left" class="w-8 h-8" />
             </button>
 
-            <div class="gallery-track flex gap-6 cursor-pointer whitespace-nowrap">
+            <div class="gallery-track">
                 {doubledImages.map((image, index) => (
-                    <div class="gallery-item min-w-[260px] md:min-w-[400px] aspect-square rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 inline-block">
-                        <Image 
-                            src={image} 
-                            alt={`Gallery ${index % galleryImages.length + 1}`}
-                            width={400}
-                            height={400}
-                            loading="lazy"
-                            format="webp"
-                            quality={65}
-                            class="w-full h-full object-cover"
-                            decoding="async"
-                        />
-                    </div>
+                    <Image 
+                        src={image} 
+                        alt={`Gallery image ${index + 1}`}
+                        width={400}
+                        height={500}
+                        class="gallery-image"
+                        loading={index < 4 ? "eager" : "lazy"}
+                        decoding={index < 4 ? "sync" : "async"}
+                    />
                 ))}
             </div>
 
@@ -52,123 +49,18 @@ const doubledImages = [...galleryImages, ...galleryImages];
     </div>
 </section>
 
-<style>
-    .gallery-track {
-        will-change: transform;
-    }
-
-    .gallery-prev,
-    .gallery-next {
-        opacity: 0.7;
-        transition: opacity 0.3s ease;
-    }
-
-    .gallery-prev:hover,
-    .gallery-next:hover {
-        opacity: 1;
-    }
-</style>
-
 <script>
-    function initGallery() {
-        const track = document.querySelector('.gallery-track');
-        const prevBtn = document.querySelector('.gallery-prev');
-        const nextBtn = document.querySelector('.gallery-next');
-        if (!track || !prevBtn || !nextBtn) return;
-
-        let animationFrameId = null;
-        let isPaused = false;
-        let scrollPosition = 0;
-        let itemWidth = 0;
-        let totalContentWidth = 0;
-        let gap = 24;
-        let speed = 2;
-
-        function initializeGallery() {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
-
-            const firstItem = track.querySelector('.gallery-item');
-            if (!firstItem) return;
-
-            itemWidth = firstItem.offsetWidth + gap;
-            const itemCount = track.children.length;
-            totalContentWidth = itemWidth * itemCount;
-
-            speed = window.innerWidth < 768 ? 1 : 2;
-
-            scrollPosition = 0;
-            track.style.transform = 'translateX(0)';
-
-            animate();
-        }
-
-        function animate() {
-            if (!isPaused) {
-                scrollPosition -= speed;
-                const halfWidth = totalContentWidth / 2;
-                if (Math.abs(scrollPosition) >= halfWidth) {
-                    scrollPosition += halfWidth;
-                }
-                track.style.transform = `translateX(${scrollPosition}px)`;
-            }
-            animationFrameId = requestAnimationFrame(animate);
-        }
-
-        function slideNext() {
-            isPaused = true;
-            scrollPosition -= itemWidth;
-            normalizeScroll();
-            track.style.transform = `translateX(${scrollPosition}px)`;
-            setTimeout(() => { isPaused = false; }, 500);
-        }
-
-        function slidePrev() {
-            isPaused = true;
-            scrollPosition += itemWidth;
-            normalizeScroll();
-            track.style.transform = `translateX(${scrollPosition}px)`;
-            setTimeout(() => { isPaused = false; }, 500);
-        }
-
-        function normalizeScroll() {
-            const halfWidth = totalContentWidth / 2;
-            if (scrollPosition <= -halfWidth) {
-                scrollPosition += halfWidth;
-            } else if (scrollPosition >= 0) {
-                scrollPosition -= halfWidth;
-            }
-        }
-
-        prevBtn.addEventListener('click', slidePrev);
-        nextBtn.addEventListener('click', slideNext);
-        track.addEventListener('mouseenter', () => { isPaused = true; });
-        track.addEventListener('mouseleave', () => { isPaused = false; });
-        track.addEventListener('touchstart', () => { isPaused = true; });
-        track.addEventListener('touchend', () => { isPaused = false; });
-
-        initializeGallery();
-
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(initializeGallery, 250);
+    import { initGallery } from '../scripts/gallery.js';
+    
+    // Initialize gallery when the component mounts
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            const cleanup = initGallery();
+            // Cleanup when the component is destroyed
+            document.addEventListener('astro:before-swap', cleanup);
         });
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            } else {
-                initializeGallery();
-            }
-        });
-    }
-
-    // Initialize gallery when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initGallery);
     } else {
-        initGallery();
+        const cleanup = initGallery();
+        document.addEventListener('astro:before-swap', cleanup);
     }
 </script>

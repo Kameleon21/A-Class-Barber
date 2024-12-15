@@ -1,4 +1,5 @@
 ---
+import '../styles/announcement.css';
 const announcements = [
     "🎉 Student Discount: 10% off Monday-Thursday",
     "💈 First Time Customer: €5 off your first haircut",
@@ -7,51 +8,20 @@ const announcements = [
 ];
 ---
 
-<div class="bg-tertiary text-white relative overflow-hidden h-10">
+<div class="bg-secondary text-black relative overflow-hidden h-10 will-change-transform">
     <div class="announcement-track whitespace-nowrap flex items-center h-full">
-        {announcements.map((text) => (
-            <span class="inline-block px-4">{text}</span>
-        ))}
-        {/* Duplicate announcements for seamless loop */}
-        {announcements.map((text) => (
-            <span class="inline-block px-4">{text}</span>
-        ))}
+        <div class="flex items-center animate-scroll">
+            {announcements.map((text) => (
+                <span class="inline-block px-4 font-semibold text-lg tracking-wide">{text}</span>
+            ))}
+            {/* Duplicate announcements for seamless loop */}
+            {announcements.map((text) => (
+                <span class="inline-block px-4 font-semibold text-lg tracking-wide">{text}</span>
+            ))}
+        </div>
     </div>
 </div>
 
-<style>
-    .announcement-track {
-        will-change: transform;
-        animation: scroll 20s linear infinite;
-    }
-
-    @keyframes scroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-50%);
-        }
-    }
-
-    /* Pause animation on hover */
-    .announcement-track:hover {
-        animation-play-state: paused;
-    }
-
-    @media (max-width: 768px) {
-        .announcement-track {
-            animation-duration: 15s;
-        }
-    }
-</style>
-
 <script>
-    // Optional: Pause animation when window is not visible
-    document.addEventListener('visibilitychange', () => {
-        const track = document.querySelector('.announcement-track');
-        if (track) {
-            track.style.animationPlayState = document.hidden ? 'paused' : 'running';
-        }
-    });
-</script> 
+    import { initAnnouncementBanner } from '../scripts/announcementBanner.js';
+</script>

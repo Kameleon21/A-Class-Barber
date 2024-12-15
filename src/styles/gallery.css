@@ -1,0 +1,64 @@
+.gallery-container {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem 0;
+}
+
+.gallery-track {
+    display: flex;
+    gap: 1.5rem;
+    will-change: transform;
+    /* Optional: Remove the .3s ease-out transition if you prefer a smoother continuous scroll
+       transition: transform 0.3s ease-out; 
+    */
+}
+
+.gallery-image {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+}
+
+.gallery-prev,
+.gallery-next {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-prev:hover,
+.gallery-next:hover {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .gallery-image {
+        width: 250px;
+        height: 350px;
+    }
+    
+    .gallery-track {
+        gap: 1rem;
+    }
+}
+
+/* Optimize animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .gallery-track {
+        transition: none;
+    }
+    
+    .gallery-image {
+        transition: none;
+    }
+    
+    .gallery-image:hover {
+        transform: none;
+    }
+}

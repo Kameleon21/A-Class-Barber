@@ -1,0 +1,39 @@
+.announcement-track {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+    perspective: 1000px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+.animate-scroll {
+    animation: scroll 20s linear infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Pause animation on hover */
+.animate-scroll:hover {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-scroll {
+        animation: none;
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .animate-scroll {
+        animation-duration: 15s;
+    }
+} 
