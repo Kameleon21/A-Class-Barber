@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import { Icon } from 'astro-icon/components';
+
+// Temporary mock data until we integrate with Google Places API
+const mockReviews = [
+    {
+        text: "Ahmed is the best there is.Very professional while also making it an enjoyable experience. Great at his job and gives the best fade",
+        customerName: "Adam",
+        rating: 5
+    },
+    {
+        text: "Top class barber. Will be back",
+        customerName: "Aaron",
+        rating: 4
+    },
+    {
+        text: "Best barber in town, takes time with the trim focuses on details, fully recommend",
+        customerName: "Abdul",
+        rating:3 
+    },
+    {
+        text: "Been getting my haircut from Ahmed for the last couple of years and never had anything to point out. Great service as usual buddy, thank you!",
+        customerName: "Andre",
+        rating: 5
+    },
+    {
+        text: "Best barber in Waterford",
+        customerName: "Sean",
+        rating: 5
+    },
+    {
+        text: "These guys are the best. A relaxing and professional experience. Class haircut every time without worry. Always look forward to the next haircut",
+        customerName: "Henry",
+        rating: 5
+    }
+];
+---
+
+<Layout title="Reviews - A Class Barber">
+    <Header />
+    <section class="bg-black text-white pt-32 md:pt-40 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
+            {/* Heading */}
+            <div class="flex justify-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-serif font-extrabold text-center inline-block border-t border-b border-[#c19d65] py-4 px-12">Reviews</h1>
+            </div>
+
+            {/* Reviews Grid */}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                {mockReviews.map(review => (
+                    <ReviewCard {...review} />
+                ))}
+            </div>
+
+            {/* Overall Rating */}
+            <div class="flex flex-col items-center gap-4">
+                <div class="flex gap-2">
+                    {Array.from({ length: 5 }).map(() => (
+                        <Icon name="mdi:star" class="w-8 h-8 text-[#c19d65]" />
+                    ))}
+                </div>
+                <p class="text-2xl font-serif">4.8 out of 5</p>
+                <p class="text-gray-400">Based on 186 reviews</p>
+            </div>
+        </div>
+    </section>
+</Layout> 
