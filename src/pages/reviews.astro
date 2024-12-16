@@ -13,7 +13,7 @@ let error = null;
 let isLoading = true;
 
 try {
-    const baseUrl = import.meta.env.PUBLIC_API_URL || '';
+    const baseUrl = import.meta.env.PUBLIC_API_URL || 'https://a-class-barber.netlify.app';
     const response = await fetch(`${baseUrl}/api/reviews`);
     
     if (!response.ok) {
