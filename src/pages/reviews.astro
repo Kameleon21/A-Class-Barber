@@ -4,39 +4,60 @@ import Header from '../components/Header.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import { Icon } from 'astro-icon/components';
 
-// Temporary mock data until we integrate with Google Places API
-const mockReviews = [
-    {
-        text: "Ahmed is the best there is.Very professional while also making it an enjoyable experience. Great at his job and gives the best fade",
-        customerName: "Adam",
-        rating: 5
-    },
-    {
-        text: "Top class barber. Will be back",
-        customerName: "Aaron",
-        rating: 4
-    },
-    {
-        text: "Best barber in town, takes time with the trim focuses on details, fully recommend",
-        customerName: "Abdul",
-        rating:3 
-    },
-    {
-        text: "Been getting my haircut from Ahmed for the last couple of years and never had anything to point out. Great service as usual buddy, thank you!",
-        customerName: "Andre",
-        rating: 5
-    },
-    {
-        text: "Best barber in Waterford",
-        customerName: "Sean",
-        rating: 5
-    },
-    {
-        text: "These guys are the best. A relaxing and professional experience. Class haircut every time without worry. Always look forward to the next haircut",
-        customerName: "Henry",
-        rating: 5
+// Fetch reviews from our API endpoint
+let reviews = [];
+let overallRating = 0;
+let totalReviews = 0;
+let businessName = '';
+let error = null;
+let isLoading = true;
+
+try {
+    const baseUrl = import.meta.env.PUBLIC_API_URL || '';
+    const response = await fetch(`${baseUrl}/api/reviews`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
-];
+    
+    const data = await response.json();
+    console.log('API Response:', data); // Debug log
+    
+    if (data.error) {
+        error = data.error;
+    } else if (!data.reviews) {
+        error = "Invalid response format from API";
+        console.error('Invalid API response:', data);
+    } else {
+        reviews = data.reviews;
+        overallRating = data.overallRating;
+        totalReviews = data.totalReviews;
+        businessName = data.businessName;
+    }
+} catch (e) {
+    console.error('Error fetching reviews:', e);
+    error = "Failed to load reviews. Please try again later.";
+} finally {
+    isLoading = false;
+}
+
+// Sort reviews by rating (highest first) and date
+const sortedReviews = reviews.sort((a, b) => {
+    if (b.rating !== a.rating) {
+        return b.rating - a.rating;
+    }
+    // Sort by date string (most recent first)
+    return b.date.localeCompare(a.date);
+});
+
+// Pagination
+const REVIEWS_PER_PAGE = 6;
+const totalPages = Math.ceil(sortedReviews.length / REVIEWS_PER_PAGE);
+const currentPage = 1;
+const paginatedReviews = sortedReviews.slice(
+    (currentPage - 1) * REVIEWS_PER_PAGE,
+    currentPage * REVIEWS_PER_PAGE
+);
 ---
 
 <Layout title="Reviews - A Class Barber">
@@ -44,27 +65,95 @@ const mockReviews = [
     <section class="bg-black text-white pt-32 md:pt-40 pb-20">
         <div class="max-w-6xl mx-auto px-4">
             {/* Heading */}
-            <div class="flex justify-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-serif font-extrabold text-center inline-block border-t border-b border-[#c19d65] py-4 px-12">Reviews</h1>
+            <div class="flex flex-col items-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-serif font-extrabold text-center inline-block border-t border-b border-[#c19d65] py-4 px-12 mb-4">Reviews</h1>
+                {businessName && <p class="text-xl text-[#c19d65]">{businessName}</p>}
             </div>
 
-            {/* Reviews Grid */}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                {mockReviews.map(review => (
-                    <ReviewCard {...review} />
-                ))}
-            </div>
+            {/* Loading State */}
+            {isLoading && (
+                <div class="flex justify-center items-center min-h-[400px]">
+                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#c19d65]"></div>
+                </div>
+            )}
+
+            {/* Error State */}
+            {error && (
+                <div class="text-center py-8">
+                    <Icon name="mdi:alert-circle" class="w-16 h-16 text-red-500 mx-auto mb-4" />
+                    <p class="text-xl text-red-400">{error}</p>
+                    <button 
+                        class="mt-4 px-6 py-2 bg-[#c19d65] text-white rounded-lg hover:bg-[#d4b684] transition-colors"
+                        onclick="window.location.reload()"
+                    >
+                        Try Again
+                    </button>
+                </div>
+            )}
 
             {/* Overall Rating */}
-            <div class="flex flex-col items-center gap-4">
-                <div class="flex gap-2">
-                    {Array.from({ length: 5 }).map(() => (
-                        <Icon name="mdi:star" class="w-8 h-8 text-[#c19d65]" />
+            {!isLoading && !error && (
+                <div class="flex flex-col items-center gap-4 mb-16">
+                    <div class="flex gap-2">
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <Icon 
+                                name="mdi:star" 
+                                class={`w-8 h-8 ${index < Math.floor(overallRating) ? 'text-[#c19d65]' : 'text-gray-400'}`}
+                            />
+                        ))}
+                    </div>
+                    <p class="text-2xl font-serif">{overallRating.toFixed(1)} out of 5</p>
+                    <p class="text-gray-400">Based on {totalReviews} reviews</p>
+                </div>
+            )}
+
+            {/* Reviews Grid */}
+            {!isLoading && !error && (
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    {paginatedReviews.map(review => (
+                        <ReviewCard 
+                            authorName={review.authorName}
+                            authorImage={review.authorImage}
+                            rating={review.rating}
+                            text={review.text}
+                            date={review.date}
+                        />
                     ))}
                 </div>
-                <p class="text-2xl font-serif">4.8 out of 5</p>
-                <p class="text-gray-400">Based on 186 reviews</p>
-            </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div class="flex justify-center gap-2">
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                        <button
+                            class={`px-4 py-2 rounded ${
+                                currentPage === index + 1
+                                    ? 'bg-[#c19d65] text-white'
+                                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                            }`}
+                            data-page={index + 1}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
     </section>
-</Layout> 
+</Layout>
+
+<script>
+    // Handle pagination
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('[data-page]');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const page = button.getAttribute('data-page');
+                // You can either reload the page with a query parameter
+                // or implement client-side pagination
+                window.location.search = `?page=${page}`;
+            });
+        });
+    });
+</script> 

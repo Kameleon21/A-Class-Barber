@@ -2,12 +2,14 @@
 import { Icon } from 'astro-icon/components';
 
 interface Props {
-    text: string;
-    customerName: string;
+    authorName: string;
+    authorImage: string;
     rating: number;
+    text: string;
+    date: string;
 }
 
-const { text, customerName, rating = 5 } = Astro.props;
+const { text, authorName, authorImage, rating = 5, date } = Astro.props;
 ---
 
 <div class="bg-gray-200 rounded-lg p-6 flex flex-col h-full">
@@ -16,19 +18,29 @@ const { text, customerName, rating = 5 } = Astro.props;
 
     {/* Star Rating */}
     <div class="flex gap-1 mb-4">
-        {Array.from({ length: rating }).map(() => (
-            <Icon name="mdi:star" class="w-6 h-6 text-[#FFD700]" />
+        {Array.from({ length: 5 }).map((_, index) => (
+            <Icon 
+                name="mdi:star" 
+                class={`w-6 h-6 ${index < rating ? 'text-[#c19d65]' : 'text-gray-400'}`}
+            />
         ))}
     </div>
 
-    {/* Customer Info */}
+    {/* Author Info */}
     <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-            <Icon name="mdi:account" class="w-6 h-6 text-white" />
-        </div>
+        {authorImage ? (
+            <Icon
+                name="mdi:account"
+                class="w-10 h-10 rounded-full bg-[#c19d65] text-white p-2"
+            />
+        ) : (
+            <div class="w-10 h-10 rounded-full bg-[#c19d65] flex items-center justify-center">
+                <Icon name="mdi:account" class="w-6 h-6 text-white" />
+            </div>
+        )}
         <div class="flex flex-col">
-            <span class="text-black">{customerName}</span>
-            <span class="text-gray-600 text-sm">Customer</span>
+            <span class="text-black font-medium">{authorName}</span>
+            <span class="text-gray-600 text-sm">{date}</span>
         </div>
     </div>
 </div>
