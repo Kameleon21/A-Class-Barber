@@ -1,7 +1,7 @@
 export async function GET() {
   try {
-    const apiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
-    const placeId = import.meta.env.GOOGLE_PLACES_ID;
+    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+    const placeId = process.env.GOOGLE_PLACES_ID;
     const CACHE_DURATION = 3600; // Cache for 1 hour
 
     // Try to get cached data first
