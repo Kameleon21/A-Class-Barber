@@ -1,4 +1,7 @@
-export async function GET() {
+export async function GET({ request }) {
+  // Get the origin from the request headers
+  const origin = request.headers.get('origin') || '*';
+
   try {
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
     const placeId = process.env.GOOGLE_PLACES_ID;
@@ -17,7 +20,6 @@ export async function GET() {
       throw new Error('Invalid response from Google Places API');
     }
     
-    // Format the response data
     const formattedData = {
       businessName: data.result.name,
       overallRating: data.result.rating,
@@ -36,8 +38,9 @@ export async function GET() {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        // Browser cache for 1 hour
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Max-Age': '86400',
         'Cache-Control': 'public, max-age=3600'
       }
     });
@@ -51,8 +54,23 @@ export async function GET() {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET'
       }
     });
   }
+}
+
+// Handle OPTIONS request for CORS preflight
+export async function OPTIONS({ request }) {
+  const origin = request.headers.get('origin') || '*';
+  
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Max-Age': '86400',
+    }
+  });
 }
