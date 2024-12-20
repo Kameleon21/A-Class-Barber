@@ -1,55 +1,8 @@
-import { getStore } from "@netlify/blobs";
-
-const CACHE_KEY = 'google-reviews';
-const CACHE_DURATION = 3600000; // 1 hour in milliseconds
-
-// At the top of your getCachedData function
-async function getCachedData() {
-  try {
-    console.log('Checking KV store for cached data...');
-    const store = getStore('reviews');
-    const data = await store.get(CACHE_KEY);
-    
-    if (!data) {
-      console.log('No cached data found');
-      return null;
-    }
-    
-    const { timestamp, content } = JSON.parse(data);
-    const age = Date.now() - timestamp;
-    console.log(`Cache age: ${Math.round(age / 1000)} seconds`);
-    
-    if (age < CACHE_DURATION) {
-      console.log('Returning cached data');
-      return content;
-    }
-    console.log('Cache expired');
-    return null;
-  } catch (error) {
-    console.error('Error reading from KV store:', error);
-    return null;
-  }
-}
-
 export async function GET() {
   try {
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
     const placeId = process.env.GOOGLE_PLACES_ID;
-
-    // Try to get cached data first
-    const cachedData = await getCachedData();
-    if (cachedData) {
-      return new Response(JSON.stringify(cachedData), {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Cache-Control': `public, max-age=${CACHE_DURATION / 1000}`
-        }
-      });
-    }
-
-    // Fetch fresh data if cache miss or expired
+    
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,reviews,user_ratings_total&key=${apiKey}`;
     
     const response = await fetch(url);
@@ -79,15 +32,13 @@ export async function GET() {
       })) || []
     };
 
-    // Cache the formatted data
-    await cacheData(formattedData);
-
     return new Response(JSON.stringify(formattedData), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': `public, max-age=${CACHE_DURATION / 1000}`
+        // Browser cache for 1 hour
+        'Cache-Control': 'public, max-age=3600'
       }
     });
   } catch (error) {
