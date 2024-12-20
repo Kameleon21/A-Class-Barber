@@ -14,6 +14,7 @@
     "@astrojs/tailwind": "^5.1.3",
     "@iconify-json/ic": "^1.2.1",
     "@iconify-json/mdi": "^1.2.1",
+    "@netlify/blobs": "^8.1.0",
     "astro": "^5.0.5",
     "astro-icon": "^1.1.4",
     "dotenv": "^16.4.7",
