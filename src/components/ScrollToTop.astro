@@ -1,0 +1,74 @@
+<button
+  id="scrollToTopBtn"
+  class="fixed bottom-6 right-6 bg-tertiary text-white p-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 invisible md:hidden"
+  aria-label="Scroll to top"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    width="24"
+    height="24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M5 10l7-7m0 0l7 7m-7-7v18"
+    />
+  </svg>
+</button>
+
+<script is:inline>
+  // Use requestAnimationFrame for smooth performance
+  let scrollTimeout;
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+  const header = document.querySelector('header');
+
+  if (scrollToTopBtn && header) {
+    const headerHeight = header.offsetHeight;
+    let isVisible = false;
+
+    const toggleButton = (show) => {
+      if (show === isVisible) return;
+      
+      isVisible = show;
+      if (show) {
+        scrollToTopBtn.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        scrollToTopBtn.classList.add('opacity-100');
+      } else {
+        scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+        scrollToTopBtn.classList.remove('opacity-100');
+        setTimeout(() => {
+          if (!isVisible) {
+            scrollToTopBtn.classList.add('invisible');
+          }
+        }, 300);
+      }
+    };
+
+    // Throttled scroll handler using requestAnimationFrame
+    const handleScroll = () => {
+      if (scrollTimeout) {
+        return;
+      }
+
+      scrollTimeout = requestAnimationFrame(() => {
+        toggleButton(window.scrollY > headerHeight);
+        scrollTimeout = null;
+      });
+    };
+
+    // Passive scroll listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+</script> 

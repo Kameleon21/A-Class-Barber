@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Header from '../components/Header.astro';
 import { openingHours, socialLinks, contactInfo } from '../data/contact.js';
+import ScrollToTop from '../components/ScrollToTop.astro';
 ---
 
 <Layout title="Contact Us">
@@ -112,4 +113,5 @@ import { openingHours, socialLinks, contactInfo } from '../data/contact.js';
             </div>
         </div>
     </section>
+    <ScrollToTop />
 </Layout>

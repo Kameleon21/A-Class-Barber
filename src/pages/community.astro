@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import { Image } from 'astro:assets';
 import { communityInitiatives } from '../data/community.js';
+import ScrollToTop from '../components/ScrollToTop.astro';
 ---
 
 <Layout title="Community - A Class Barber">
@@ -51,4 +52,5 @@ import { communityInitiatives } from '../data/community.js';
             </div>
         </div>
     </section>
+    <ScrollToTop />
 </Layout>
