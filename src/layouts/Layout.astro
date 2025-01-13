@@ -6,22 +6,24 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/src/assets/logoRemoved.png" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
-        
-        <!-- Preload critical assets -->
-        <link rel="preload" as="image" href="/src/assets/image-19.jpg" type="image/webp">
-        
-        <!-- Add preconnect for external resources -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    </head>
-    <body>
-        <slot />
-    </body>
-</html> 
+<!doctype html>
+<html lang="en" class="bg-black">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-black overflow-x-hidden">
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	/* You can keep your existing global styles */
+	html {
+		scroll-behavior: smooth;
+	}
+</style> 
