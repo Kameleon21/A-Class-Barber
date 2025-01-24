@@ -58,6 +58,10 @@ export function initGallery() {
         // Move back by one itemWidth and wrap around using modulo
         scrollPosition = (scrollPosition - itemWidth + halfWidth) % halfWidth;
         track.style.transform = `translateX(-${scrollPosition}px)`;
+        // Resume animation after 3 seconds
+        setTimeout(() => {
+            isPaused = false;
+        }, 3000);
     });
 
     nextBtn.addEventListener('click', () => {
@@ -65,6 +69,10 @@ export function initGallery() {
         // Move forward by one itemWidth and wrap around using modulo
         scrollPosition = (scrollPosition + itemWidth) % halfWidth;
         track.style.transform = `translateX(-${scrollPosition}px)`;
+        // Resume animation after 3 seconds
+        setTimeout(() => {
+            isPaused = false;
+        }, 3000);
     });
 
     // Initialize

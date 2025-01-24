@@ -1,3 +1,4 @@
+export const prerender = false; // Disable prerendering for this API route
 export async function GET({ request }) {
   // Get the origin from the request headers
   const origin = request.headers.get('origin') || '*';
