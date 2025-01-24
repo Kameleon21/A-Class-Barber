@@ -2,9 +2,15 @@
   command = "npm run build"
   publish = "dist"
 
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 [[headers]]
   for = "/api/*"
     [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type"
+      Access-Control-Allow-Origin = "*"
+      Access-Control-Allow-Methods = "GET, OPTIONS"
+      Access-Control-Allow-Headers = "Content-Type"
+
