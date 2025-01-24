@@ -1,4 +1,7 @@
+import crypto from 'crypto';
+
 export const prerender = false; // Disable prerendering for this API route
+
 export async function GET({ request }) {
   // Get the origin from the request headers
   const origin = request.headers.get('origin') || '*';
@@ -35,14 +38,31 @@ export async function GET({ request }) {
       })) || []
     };
 
+    // Generate ETag based on the response content
+    const etag = crypto.createHash('sha1').update(JSON.stringify(formattedData)).digest('hex');
+
+    // Check for If-None-Match header
+    const ifNoneMatch = request.headers.get('If-None-Match');
+
+    if (ifNoneMatch === etag) {
+      return new Response(null, {
+        status: 304,
+        headers: {
+          'Access-Control-Allow-Origin': origin,
+          'Access-Control-Allow-Methods': 'GET',
+          'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=60',
+        }
+      });
+    }
+
     return new Response(JSON.stringify(formattedData), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': origin,
         'Access-Control-Allow-Methods': 'GET',
-        'Access-Control-Max-Age': '86400',
-        'Cache-Control': 'public, max-age=3600'
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=60',
+        'ETag': etag
       }
     });
   } catch (error) {
