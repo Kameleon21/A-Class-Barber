@@ -18,7 +18,8 @@
     "astro": "^5.1.9",
     "astro-icon": "^1.1.4",
     "dotenv": "^16.4.7",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "astro-compress": "^2.3.5"

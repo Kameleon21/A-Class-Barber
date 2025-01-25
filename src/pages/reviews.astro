@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import { Icon } from 'astro-icon/components';
 import ScrollToTop from '../components/ScrollToTop.astro';
+import { format } from 'timeago.js';
 ---
 
 <Layout title="Reviews - A Class Barber">
@@ -151,6 +152,9 @@ import ScrollToTop from '../components/ScrollToTop.astro';
         const card = document.createElement('div');
         card.className = 'bg-gray-200 rounded-lg p-6 flex flex-col h-full';
         
+        // Format the date using timeago
+        const relativeTime = format(review.date);
+        
         card.innerHTML = `
             <p class="text-black text-lg italic mb-6 flex-grow">"${review.text}"</p>
             <div class="flex gap-1 mb-4">
@@ -171,7 +175,7 @@ import ScrollToTop from '../components/ScrollToTop.astro';
                 </div>
                 <div class="flex flex-col">
                     <span class="text-black font-medium">${review.authorName}</span>
-                    <span class="text-gray-600 text-sm">${review.date}</span>
+                    <span class="text-gray-600 text-sm">${relativeTime}</span>
                 </div>
             </div>
         `;
