@@ -69,10 +69,9 @@ import ScrollToTop from '../components/ScrollToTop.astro';
     async function fetchReviews() {
         try {
             const baseUrl = window.location.origin;
-            const response = await fetch(`${baseUrl}/api/reviews`, {
-             cache: 'default' // Ensures standard caching behavior
+            const response = await fetch(`${baseUrl}/.netlify/functions/reviews`, {
+                cache: 'default'
             });
- 
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
