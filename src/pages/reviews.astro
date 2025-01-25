@@ -69,8 +69,52 @@ import { format } from 'timeago.js';
         businessName: ''
     };
 
+    const CACHE_KEY = 'reviews_cache';
+    const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+    
+    function getCache() {
+        try {
+            const cached = localStorage.getItem(CACHE_KEY);
+            if (!cached) return null;
+
+            const { data, timestamp } = JSON.parse(cached);
+            const now = new Date().getTime();
+
+            // Check if cache is expired (older than 1 hour)
+            if (now - timestamp > CACHE_DURATION) {
+                localStorage.removeItem(CACHE_KEY);
+                return null;
+            }
+
+            return data;
+        } catch (error) {
+            console.warn('Cache access failed:', error);
+            return null;
+        }
+    }
+
+    function setCache(data) {
+        try {
+            const cacheData = {
+                data,
+                timestamp: new Date().getTime()
+            };
+            localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+        } catch (error) {
+            console.warn('Cache write failed:', error);
+        }
+    }
+
     async function fetchReviews() {
         try {
+            // Check cache first
+            const cachedData = getCache();
+            if (cachedData) {
+                console.log('Using cached reviews data');
+                return cachedData;
+            }
+
+            console.log('Fetching fresh reviews data');
             const baseUrl = window.location.origin;
             const response = await fetch(`${baseUrl}/.netlify/functions/reviews`, {
                 cache: 'default'
@@ -85,6 +129,9 @@ import { format } from 'timeago.js';
             if (data.error) {
                 throw new Error(data.error);
             }
+
+            // Cache the fresh data
+            setCache(data);
             
             return data;
         } catch (error) {
