@@ -1,15 +1,11 @@
 export function initAnnouncementBanner() {
-    const track = document.querySelector('.animate-scroll');
-    
-    // Use the Page Visibility API efficiently
-    let visibilityHandler = () => {
-        if (track) {
-            track.style.animationPlayState = document.hidden ? 'paused' : 'running';
-        }
-    };
+    const content = document.querySelector('.announcement-content');
+    if (!content) return;
 
-    // Use passive event listener to improve performance
-    document.addEventListener('visibilitychange', visibilityHandler, { passive: true });
+    // Calculate total width to adjust animation duration
+    const totalWidth = content.scrollWidth;
+    const duration = Math.max(20, totalWidth / 100); // Adjust speed based on content width
+    content.style.animationDuration = `${duration}s`;
 }
 
 // Initialize when the module is imported

@@ -250,7 +250,7 @@ import { format } from 'timeago.js';
                         ? 'bg-[#c19d65] text-white'
                         : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                 }`;
-                button.textContent = i;
+                button.textContent = String(i);
                 button.addEventListener('click', () => {
                     currentPage = i;
                     updateReviewsGrid();

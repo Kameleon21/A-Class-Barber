@@ -9,7 +9,7 @@ export function initGallery() {
     let scrollPosition = 0;
     let itemWidth = 0;
     let gap = 24;
-    let speed = 2;
+    let speed = window.innerWidth <= 768 ? 1.5 : 1; // Reduced speed for both mobile and desktop
     let halfWidth = 0; // The track width is doubled, so halfWidth = total width / 2
 
     function updateDimensions() {

@@ -8,15 +8,16 @@ const announcements = [
 ];
 ---
 
-<div class="bg-secondary text-black relative overflow-hidden h-10 will-change-transform">
-    <div class="announcement-track whitespace-nowrap flex items-center h-full">
-        <div class="flex items-center animate-scroll">
+<div class="announcement-banner">
+    <div class="announcement-track">
+        <div class="announcement-content">
             {announcements.map((text) => (
-                <span class="inline-block px-4 font-semibold text-lg tracking-wide">{text}</span>
+                <span>{text}</span>
             ))}
-            {/* Duplicate announcements for seamless loop */}
+        </div>
+        <div class="announcement-content">
             {announcements.map((text) => (
-                <span class="inline-block px-4 font-semibold text-lg tracking-wide">{text}</span>
+                <span>{text}</span>
             ))}
         </div>
     </div>
@@ -24,4 +25,5 @@ const announcements = [
 
 <script>
     import { initAnnouncementBanner } from '../scripts/announcementBanner.js';
+    initAnnouncementBanner();
 </script>
