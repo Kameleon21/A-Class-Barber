@@ -27,17 +27,21 @@ import ScrollToTop from '../components/ScrollToTop.astro';
                                 <h2 class="text-3xl md:text-4xl font-serif font-bold">{initiative.title}</h2>
                                 <p class="text-lg leading-relaxed">{initiative.description}</p>
                             </div>
-                            {/* Image */}
-                            <div class={`rounded-lg overflow-hidden h-[450px] order-2 ${
+                            {/* Image Container */}
+                            <div class={`relative rounded-lg overflow-hidden order-2 ${
                                 initiative.imagePosition === 'left' ? 'md:order-1' : 'md:order-2'
                             }`}>
-                                <Image 
-                                    src={initiative.image} 
-                                    alt={initiative.imageAlt}
-                                    width={450} 
-                                    height={450}
-                                    class="w-full h-full object-cover"
-                                />
+                                <div class="aspect-w-4 aspect-h-3 md:aspect-w-16 md:aspect-h-9">
+                                    <Image 
+                                        src={initiative.image} 
+                                        alt={initiative.imageAlt}
+                                        width={800} 
+                                        height={600}
+                                        class="w-full h-full object-cover object-center"
+                                        format="webp"
+                                        quality={90}
+                                    />
+                                </div>
                             </div>
                         </div>
                         
