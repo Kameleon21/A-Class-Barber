@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
+import { communityInitiatives } from '../data/community.js';
+import ScrollToTop from '../components/ScrollToTop.astro';
+---
+
+<Layout title="Community - A Class Barber">
+    <Header />
+    <section class="bg-black text-white pt-32 md:pt-40 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center mb-16">
+                <h1 class="text-4xl md:text-5xl font-serif font-extrabold text-center inline-block border-t border-b border-[#c19d65] py-4 px-12">Community</h1>
+            </div>
+
+            <div class="space-y-20">
+                {communityInitiatives.map((initiative, index) => (
+                    <div>
+                        <div class={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center ${
+                            initiative.imagePosition === 'left' ? 'md:grid-flow-col' : ''
+                        }`}>
+                            {/* Text Content */}
+                            <div class={`space-y-6 order-1 ${
+                                initiative.imagePosition === 'left' ? 'md:order-2' : 'md:order-1'
+                            }`}>
+                                <h2 class="text-3xl md:text-4xl font-serif font-bold">{initiative.title}</h2>
+                                <p class="text-lg leading-relaxed">{initiative.description}</p>
+                            </div>
+                            {/* Image Container */}
+                            <div class={`relative rounded-lg overflow-hidden order-2 ${
+                                initiative.imagePosition === 'left' ? 'md:order-1' : 'md:order-2'
+                            }`}>
+                                <div class="aspect-w-4 aspect-h-3 md:aspect-w-16 md:aspect-h-9">
+                                    <Image 
+                                        src={initiative.image} 
+                                        alt={initiative.imageAlt}
+                                        width={800} 
+                                        height={600}
+                                        class="w-full h-full object-cover object-center"
+                                        format="webp"
+                                        quality={90}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Add divider if not the last item */}
+                        {index < communityInitiatives.length - 1 && (
+                            <div class="relative">
+                                <div class="w-[66%] h-0.5 bg-tertiary mx-auto my-20"></div>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+    <ScrollToTop />
+</Layout>

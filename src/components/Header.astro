@@ -1,0 +1,75 @@
+---
+import '../styles/hamburger.css';
+import { Image } from 'astro:assets';
+import aClassLogo from '../assets/aClassLogo.jpg';
+---
+
+<header class="w-full bg-transparent text-white px-4 sm:px-8 py-6 absolute top-0 left-0 right-0 z-50">
+    <div class="max-w-[1920px] mx-auto md:mt-4 flex items-center justify-between">
+        {/* Logo - left on mobile, center on medium+ screens */}
+        <div class="flex items-center md:absolute md:left-1/2 md:-translate-x-1/2">
+            <a href="/" class="inline-block">
+                <Image 
+                    src={aClassLogo} 
+                    alt="Logo" 
+                    width={100}
+                    height={100}
+                    class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full" 
+                    loading="eager"
+                    format="webp"
+                    quality={85}
+                />
+            </a>
+        </div>
+
+        {/* Hamburger menu button - only visible on small screens */}
+        <button id="menu-toggle" class="md:hidden text-white z-50 relative" aria-label="Toggle menu">
+            <div class="w-8 h-8 flex items-center justify-center">
+                <span class="hamburger-top"></span>
+                <span class="hamburger-middle"></span>
+                <span class="hamburger-bottom"></span>
+            </div>
+        </button>
+
+        {/* Mobile menu - hidden by default */}
+        <div id="mobile-menu" class="fixed inset-0 z-40 translate-x-full transition-transform duration-300 ease-in-out">
+            {/* Backdrop */}
+            <div class="absolute inset-0 bg-secondary/70 backdrop-blur-sm"></div>
+            
+            {/* Menu content */}
+            <div class="relative h-full w-full flex flex-col items-center justify-center">
+                <nav class="flex flex-col gap-8 text-center">
+                    <a href="/" class="text-2xl text-primary hover:text-tertiary transition-colors">Home</a>
+                    <a href="/about#about" class="text-2xl text-primary hover:text-tertiary transition-colors">About</a>
+                    <a href="/#services" class="text-2xl text-primary hover:text-tertiary transition-colors">Services</a>
+                    <a href="/about" class="text-2xl text-primary hover:text-tertiary transition-colors">Team</a>
+                    <a href="/community" class="text-2xl text-primary hover:text-tertiary transition-colors">Community</a>
+                    <a href="/reviews" class="text-2xl text-primary hover:text-tertiary transition-colors">Reviews</a>
+                    <a href="/contact" class="text-2xl text-primary hover:text-tertiary transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+
+        {/* Desktop/Tablet navigation - hidden on mobile */}
+        <div class="hidden md:flex items-center justify-between w-full">
+            {/* Left nav */}
+            <nav class="flex gap-8 lg:gap-16 flex-1 justify-end pr-12 lg:pr-32">
+                <a href="/" class="text-lg lg:text-xl hover:text-tertiary transition-colors">Home</a>
+                <a href="/about" class="text-lg lg:text-xl hover:text-tertiary transition-colors">About</a>
+                <a href="/#services" class="text-lg lg:text-xl hover:text-tertiary transition-colors">Services</a>
+            </nav>
+
+            {/* Right nav */}
+            <nav class="flex gap-8 lg:gap-16 flex-1 justify-start pl-12 lg:pl-32">
+                <a href="/community" class="text-lg lg:text-xl hover:text-tertiary transition-colors">Community</a>
+                <a href="/reviews" class="text-lg lg:text-xl hover:text-tertiary transition-colors">Reviews</a>
+                <a href="/contact" class="text-lg lg:text-xl hover:text-tertiary transition-colors">Contact</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<script>
+    import { initMobileMenu } from '../scripts/mobileMenu.js';
+    initMobileMenu();
+</script>

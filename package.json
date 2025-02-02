@@ -10,8 +10,19 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.1.2",
-    "astro": "^4.16.16",
-    "tailwindcss": "^3.4.15"
+    "@astrojs/netlify": "^6.1.0",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.3",
+    "@iconify-json/ic": "^1.2.1",
+    "@iconify-json/mdi": "^1.2.1",
+    "@netlify/blobs": "^8.1.0",
+    "astro": "^5.1.9",
+    "astro-icon": "^1.1.4",
+    "dotenv": "^16.4.7",
+    "tailwindcss": "^3.4.15",
+    "timeago.js": "^4.0.2"
+  },
+  "devDependencies": {
+    "astro-compress": "^2.3.5"
   }
 }

@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import image1 from '../assets/barber-2.jpeg';
+import image2 from '../assets/barber-1.jpeg';
+import image3 from '../assets/barber-3.jpeg';
+import image4 from '../assets/barber-4.jpeg';
+
+const teamMembers = [
+    {
+        image: image1,
+        name: "Ahmed",
+        role: "Owner",
+        imageStyle: "object-cover object-[center_40%] md:scale-125 md:hover:scale-100 transition-transform duration-300"
+    },
+    {
+        image: image2,
+        name: "Emil",
+        role: "Barber",
+        imageStyle: "object-cover object-[center_35%] md:scale-125 md:hover:scale-100 transition-transform duration-300"
+    },
+    {
+        image: image3,
+        name: "Ghilas",
+        role: "Barber",
+        imageStyle: "object-cover object-[center_30%] md:scale-125 md:hover:scale-100 transition-transform duration-300"
+    },
+    {
+        image: image4,
+        name: "Alin",
+        role: "Barber",
+        imageStyle: "object-cover object-[left_30%] md:scale-125 md:hover:scale-100 transition-transform duration-300"
+    }
+];
+---
+
+<section id="team" class="w-full bg-black text-white pt-32 md:pt-40 pb-20">
+    <div class="max-w-[1920px] mx-auto px-4 sm:px-8">
+        {/* Meet The Team Section */}
+        <div class="text-center mb-16 relative flex flex-col items-center gap-4">
+            <span class="w-32 h-0.5 bg-tertiary"></span>
+            <h2 class="text-4xl md:text-5xl font-serif font-extrabold text-tertiary">
+                Meet The Team
+            </h2>
+            <span class="w-32 h-0.5 bg-tertiary"></span>
+        </div>
+
+        {/* Team Members Grid */}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
+            {teamMembers.map(member => (
+                <div class="flex flex-col items-center">
+                    <div class="w-64 h-64 rounded-2xl overflow-hidden mb-4">
+                        <Image 
+                            src={member.image}
+                            alt={member.name}
+                            width={400}
+                            height={400}
+                            class={member.imageStyle}
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </div>
+                    <h3 class="text-2xl text-white mb-1">{member.name}</h3>
+                    <p class="text-tertiary italic">{member.role}</p>
+                </div>
+            ))}
+        </div>
+
+        {/* White Divider */}
+        <div class="w-full max-w-4xl mx-auto h-px bg-white/30 mb-32"></div>
+
+        {/* About Us Section */}
+        <div class="text-center mb-16 relative flex flex-col items-center gap-4">
+            <span class="w-32 h-0.5 bg-tertiary"></span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-tertiary">
+                About Us
+            </h2>
+            <span class="w-32 h-0.5 bg-tertiary"></span>
+        </div>
+
+        {/* About Content */}
+        <div id="about" class="max-w-4xl mx-auto text-lg space-y-6 text-secondary/90">
+            <p>
+                Established in 2017 by the owner Ahmed Elallus, this thriving business is a testament to Ahmed’s passion for the art of barbering. With over 26 years of experience, Ahmed’s journey began when he was 14, supported by his family and friends who helped him open his first shop in his home town at the age of 18. After some time Ahmed moved to Ireland where he opened his A class barbers, located in the heart of Waterford City.
+            </p>
+            <p>
+                Ahmed’s barbershop has become a beloved hub for the community, offering a wide range of services catering to all ages. From traditional Turkish shaves to expert skin fading, Ahmed’s commitment to excellence and continues self-improvement has earned him a reputation as a go-to destination for quality grooming services. 
+            </p>
+        </div>
+    </div>
+</section>

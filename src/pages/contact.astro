@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import Header from '../components/Header.astro';
+import { openingHours, socialLinks, contactInfo } from '../data/contact.js';
+import ScrollToTop from '../components/ScrollToTop.astro';
+
+const pageTitle = "Contact Us - A Class Barber";
+const pageDescription = "Get in touch with A Class Barber in Waterford. Find our location, opening hours, and contact details. Professional barbering services in a welcoming environment.";
+---
+
+<Layout 
+    title={pageTitle}
+    description={pageDescription}
+>
+    <Header />
+    <section class="bg-black text-white pt-32 md:pt-40 pb-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center mb-8 md:mb-16">
+                <h1 class="text-4xl md:text-5xl font-serif font-extrabold text-center inline-block border-t border-b border-[#c19d65] py-4 px-12">Contact Us</h1>
+            </div>
+
+            {/* Contact Details - Visible only on mobile right after heading */}
+            <div class="md:hidden mb-16 flex flex-col items-center gap-4">
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="flex items-center gap-4">
+                        <Icon name="mdi:map-marker" class="w-8 h-8 text-[#c19d65]" />
+                        <span class="text-lg">{contactInfo.address}</span>
+                    </div>
+                    <div class="flex items-centercenter">
+                        <Icon name="mdi:phone" class="w-8 h-8 text-[#c19d65]" />
+                        <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} class="text-lg hover:text-[#c19d65] transition-colors">
+                            {contactInfo.phone}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                {/* Opening Hours */}
+                <div class="order-2 md:order-none">
+                    <h2 class="text-2xl font-serif font-bold mb-6">Opening Hours</h2>
+                    <div class="space-y-3">
+                        {openingHours.map(({ day, hours }) => (
+                            <div class="flex justify-between border-b border-gray-700 pb-2">
+                                <span class="font-serif">{day}</span>
+                                <span>{hours}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Map Section */}
+                <div class="order-3 md:order-none">
+                    <h2 class="text-2xl font-serif font-bold mb-6">Find Us</h2>
+                    <div class="w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden">
+                        <iframe 
+                            src={contactInfo.mapUrl}
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+
+            {/* Contact Details and Social Links - Hidden on mobile, visible on desktop */}
+            <div class="hidden md:grid grid-cols-2 gap-8 items-center">
+                {/* Contact Details */}
+                <div class="flex flex-col items-start gap-4">
+                    <div class="flex items-center gap-4">
+                        <Icon name="mdi:map-marker" class="w-8 h-8 text-[#c19d65]" />
+                        <span class="text-lg">{contactInfo.address}</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <Icon name="mdi:phone" class="w-8 h-8 text-[#c19d65]" />
+                        <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} class="text-lg hover:text-[#c19d65] transition-colors">
+                            {contactInfo.phone}
+                        </a>
+                    </div>
+                </div>
+
+                {/* Social Links */}
+                <div class="flex flex-col items-end">
+                    <h2 class="text-2xl font-serif font-bold mb-6">Follow Us On Socials</h2>
+                    <div class="flex gap-6">
+                        {socialLinks.map(({ platform, icon, url }) => (
+                            <a 
+                                href={url}
+                                class="text-[#c19d65] hover:text-[#d4b684] transition-colors" 
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Follow us on ${platform}`}
+                            >
+                                <Icon name={icon} class="w-8 h-8" />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Social Links - Visible only on mobile */}
+            <div class="md:hidden flex flex-col items-center">
+                <h2 class="text-2xl font-serif font-bold mb-6">Follow Us On Socials</h2>
+                <div class="flex gap-6">
+                    {socialLinks.map(({ platform, icon, url }) => (
+                        <a 
+                            href={url}
+                            class="text-[#c19d65] hover:text-[#d4b684] transition-colors" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Follow us on ${platform}`}
+                        >
+                            <Icon name={icon} class="w-8 h-8 hover:text-[#d4b684] transition-colors" />
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+    <ScrollToTop />
+</Layout>

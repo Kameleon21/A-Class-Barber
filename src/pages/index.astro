@@ -1,16 +1,23 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Gallery from '../components/Gallery.astro';
+import Service from '../components/Service.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
 
+const pageTitle = "A-Class Barber | Premier Barbershop in Waterford";
+const pageDescription = "Experience exceptional grooming at A-Class Barber, Waterford's premier barbershop. Professional haircuts, styling, and beard services. Student discounts available. Book your appointment today!";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout 
+    title={pageTitle}
+    description={pageDescription}
+    ogImage="/images/hero-og.jpg"
+>
+    <main>
+        <Hero />
+        <Gallery />
+        <Service />
+    </main>
+    <ScrollToTop />
+</Layout>
