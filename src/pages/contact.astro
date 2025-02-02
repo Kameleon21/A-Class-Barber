@@ -4,9 +4,15 @@ import { Icon } from 'astro-icon/components';
 import Header from '../components/Header.astro';
 import { openingHours, socialLinks, contactInfo } from '../data/contact.js';
 import ScrollToTop from '../components/ScrollToTop.astro';
+
+const pageTitle = "Contact Us - A Class Barber";
+const pageDescription = "Get in touch with A Class Barber in Waterford. Find our location, opening hours, and contact details. Professional barbering services in a welcoming environment.";
 ---
 
-<Layout title="Contact Us">
+<Layout 
+    title={pageTitle}
+    description={pageDescription}
+>
     <Header />
     <section class="bg-black text-white pt-32 md:pt-40 pb-20">
         <div class="max-w-6xl mx-auto px-4">
@@ -16,15 +22,17 @@ import ScrollToTop from '../components/ScrollToTop.astro';
 
             {/* Contact Details - Visible only on mobile right after heading */}
             <div class="md:hidden mb-16 flex flex-col items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <Icon name="mdi:map-marker" class="w-8 h-8 text-[#c19d65]" />
-                    <span class="text-lg">{contactInfo.address}</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <Icon name="mdi:phone" class="w-8 h-8 text-[#c19d65]" />
-                    <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} class="text-lg hover:text-[#c19d65] transition-colors">
-                        {contactInfo.phone}
-                    </a>
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="flex items-center gap-4">
+                        <Icon name="mdi:map-marker" class="w-8 h-8 text-[#c19d65]" />
+                        <span class="text-lg">{contactInfo.address}</span>
+                    </div>
+                    <div class="flex items-centercenter">
+                        <Icon name="mdi:phone" class="w-8 h-8 text-[#c19d65]" />
+                        <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} class="text-lg hover:text-[#c19d65] transition-colors">
+                            {contactInfo.phone}
+                        </a>
+                    </div>
                 </div>
             </div>
             

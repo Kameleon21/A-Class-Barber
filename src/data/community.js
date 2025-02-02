@@ -28,7 +28,7 @@ export const communityInitiatives = [
     },
     {
         title: "Waterford Rose",
-        description: "This image highlights A-Class Barber's sponsorship of Anne for the Rose of Waterford. Anne, a former trainee at the barber shop, is now supported by her old workplace as she takes on the prestigious role. This sponsorship underscores the strong community bonds and the barber's shop's commitment to uplifting local talent. It reflects their dedication to the community and the importance of supporting local talent.",
+        description: "This image highlights A-Class Barber's sponsorship of Anne for the Rose of Waterford. Anne, a former trainee at the barber shop, is now supported by her old workplace as she takes on the prestigious role. This sponsorship highlights the strong community bonds and the barber's shop's commitment to uplifting local talent. It reflects their dedication to the community and the importance of supporting local talent.",
         image: sponsorship,
         imageAlt: "Sponsorship",
         imagePosition: "right"
@@ -41,7 +41,7 @@ export const communityInitiatives = [
         imagePosition: "left"
     },
     {
-        title: "Sponsoring local boxing club",
+        title: "Sponsoring Local Boxing Club",
         description: "A-Class Barber's is proudly sponsoring Paul's boxing club and the talented boxer Shamie. The collaboration between the barber shop and the boxing club exemplifies the positive influence local business can have on individual athletes and sports organisations, driving success and strengthening community bonds.",
         image: localBoxing,
         imageAlt: "local boxing club",

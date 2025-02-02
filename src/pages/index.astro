@@ -4,9 +4,16 @@ import Hero from '../components/Hero.astro';
 import Gallery from '../components/Gallery.astro';
 import Service from '../components/Service.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
+
+const pageTitle = "A-Class Barber | Premier Barbershop in Waterford";
+const pageDescription = "Experience exceptional grooming at A-Class Barber, Waterford's premier barbershop. Professional haircuts, styling, and beard services. Student discounts available. Book your appointment today!";
 ---
 
-<Layout title="A-Class Barbers">
+<Layout 
+    title={pageTitle}
+    description={pageDescription}
+    ogImage="/images/hero-og.jpg"
+>
     <main>
         <Hero />
         <Gallery />
