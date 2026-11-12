@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://a-class-barber.com/sitemap-index.xml 
+Sitemap: https://aclassbarbers.com/sitemap-index.xml 
