@@ -13,6 +13,7 @@ import image10 from '../assets/image-26.jpg';
 import image11 from '../assets/image-27.jpg';
 import { Icon } from 'astro-icon/components';
 import '../styles/gallery.css';
+import SectionHeading from './SectionHeading.astro';
 
 const galleryImages = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11];
 const doubledImages = [...galleryImages, ...galleryImages];
@@ -20,33 +21,36 @@ const doubledImages = [...galleryImages, ...galleryImages];
 
 <section class="w-full bg-black py-20">
     <div class="max-w-[1920px] mx-auto px-4 sm:px-8">
-        <h2 class="text-4xl md:text-5xl font-serif font-extrabold text-white text-center mb-16">Gallery</h2>
-        
+        <SectionHeading title="Gallery" tone="white" />
+
         <div class="gallery-container">
             <button 
-                class="gallery-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-r-lg transition-colors"
-                aria-label="Previous"
+                class="gallery-prev absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-black/60 text-white p-2 rounded-full border border-tertiary/70 hover:bg-tertiary hover:text-black transition-colors"
+                aria-label="Previous photos"
             >
                 <Icon name="mdi:chevron-left" class="w-8 h-8" />
             </button>
 
+            <div class="gallery-viewport">
             <div class="gallery-track">
                 {doubledImages.map((image, index) => (
                     <Image 
                         src={image} 
-                        alt={`Gallery ${index + 1}`}
+                        alt={index < galleryImages.length ? `Haircut by A-Class Barbers, photo ${index + 1} of ${galleryImages.length}` : ''}
+                        aria-hidden={index < galleryImages.length ? undefined : 'true'}
                         width={400}
                         height={500}
                         class="gallery-image"
                         loading={index < 4 ? "eager" : "lazy"}
-                        decoding={index < 4 ? "sync" : "async"}
+                        decoding="async"
                     />
                 ))}
             </div>
+            </div>
 
             <button 
-                class="gallery-next absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-l-lg transition-colors"
-                aria-label="Next"
+                class="gallery-next absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-black/60 text-white p-2 rounded-full border border-tertiary/70 hover:bg-tertiary hover:text-black transition-colors"
+                aria-label="Next photos"
             >
                 <Icon name="mdi:chevron-right" class="w-8 h-8" />
             </button>

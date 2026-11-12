@@ -3,49 +3,61 @@ import Header from './Header.astro';
 import { Image } from 'astro:assets';
 import hero from '../assets/image-19.jpg';
 import AnnouncementBanner from './AnnouncementBanner.astro';
+import { contactInfo } from '../data/contact.js';
+
+const telHref = `tel:${contactInfo.phone.replace(/\s/g, '')}`;
 ---
 
-<section class="relative w-full h-screen bg-black">
+<section class="relative isolate flex flex-col w-full min-h-screen min-h-svh bg-black overflow-hidden">
     <AnnouncementBanner />
-    <Header />
-    
+    <div class="relative z-50">
+        <Header />
+    </div>
+
     {/* Background image with overlay */}
-    <div class="absolute inset-0">
+    <div class="absolute inset-0 -z-10">
         <Image 
             src={hero}
-            alt="Hero background"
+            alt=""
             width={1920}
             height={1080}   
-            class="absolute inset-0 w-full h-full object-top object-cover opacity-50"
+            class="hero-image absolute inset-0 w-full h-full object-top object-cover opacity-50"
             loading="eager"
             fetchpriority="high"
             format="webp"
             quality={65}
         />
-        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black"></div>
     </div>
 
     {/* Content */}
-    <div class="relative h-full max-w-[1920px] mx-auto flex flex-col items-center">
-        {/* Main content - centered */}
-        <div class="flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-8">
-            {/* Main heading */}
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 text-white">
-                At A-Class
-            </h1>
+    <div class="relative flex-1 w-full max-w-[1920px] mx-auto flex flex-col items-center justify-center text-center px-4 sm:px-8 pt-36 pb-24">
+        <p class="hero-in flex items-center gap-4 text-xs sm:text-sm uppercase tracking-[0.35em] text-secondary mb-8" style="--i:0">
+            <span class="hidden sm:block w-10 h-px bg-tertiary" aria-hidden="true"></span>
+            Turkish Barbers · Waterford · Est. 2017
+            <span class="hidden sm:block w-10 h-px bg-tertiary" aria-hidden="true"></span>
+        </p>
 
-            {/* Subheading */}
-            <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif text-tertiary mb-12">
-                We Do Class
-            </h2>
+        <h1 class="font-serif">
+            <span class="hero-in block text-5xl md:text-6xl lg:text-7xl text-white mb-4" style="--i:1">At A-Class</span>
+            <span class="hero-in block text-4xl md:text-5xl lg:text-6xl italic text-tertiary mb-12" style="--i:2">We Do Class</span>
+        </h1>
 
-            {/* CTA Button */}
+        <div class="hero-in flex flex-col sm:flex-row items-center gap-4 sm:gap-6" style="--i:3">
             <a 
                 href="/#services" 
-                class="px-8 py-4 border-4 border-tertiary bg-tertiary/50 text-secondary transition-all duration-300 ease-in-out text-xl md:text-2xl hover:scale-110"
+                class="px-8 py-4 border-2 border-tertiary bg-tertiary/50 text-white text-xl md:text-2xl transition-colors duration-300 ease-out hover:bg-tertiary hover:text-black"
             >
                 View Our Services
             </a>
+            <a 
+                href={telHref}
+                class="px-8 py-4 border-2 border-white/40 text-white text-xl md:text-2xl transition-colors duration-300 ease-out hover:border-tertiary hover:text-tertiary"
+            >
+                Call {contactInfo.phone}
+            </a>
         </div>
     </div>
-</section> 
+
+    <span class="scroll-cue absolute bottom-0 left-1/2 w-px h-14 bg-tertiary" aria-hidden="true"></span>
+</section>

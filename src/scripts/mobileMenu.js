@@ -1,38 +1,49 @@
 export function initMobileMenu() {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+    if (!menuToggle || !mobileMenu) return;
 
-    menuToggle?.addEventListener('click', () => {
-        const isOpen = menuToggle.classList.contains('open');
-        
-        if (!isOpen) {
-            // Opening the menu
-            mobileMenu?.classList.remove('hidden');
-            setTimeout(() => {
-                mobileMenu?.classList.remove('translate-x-full');
+    let closeTimer;
+
+    function openMenu() {
+        clearTimeout(closeTimer);
+        mobileMenu.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                mobileMenu.classList.remove('translate-x-full');
                 menuToggle.classList.add('open');
-            }, 10);
-            document.body.style.overflow = 'hidden';
+            });
+        });
+        menuToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        mobileMenu.classList.add('translate-x-full');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        closeTimer = setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+        }, 300);
+    }
+
+    menuToggle.addEventListener('click', () => {
+        if (menuToggle.getAttribute('aria-expanded') === 'true') {
+            closeMenu();
         } else {
-            // Closing the menu
-            mobileMenu?.classList.add('translate-x-full');
-            menuToggle.classList.remove('open');
-            document.body.style.overflow = '';
-            setTimeout(() => {
-                mobileMenu?.classList.add('hidden');
-            }, 300);
+            openMenu();
         }
     });
 
-    const mobileLinks = mobileMenu?.querySelectorAll('a');
-    mobileLinks?.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu?.classList.add('translate-x-full');
-            menuToggle?.classList.remove('open');
-            document.body.style.overflow = '';
-            setTimeout(() => {
-                mobileMenu?.classList.add('hidden');
-            }, 300);
-        });
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
     });
-} 
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
+            closeMenu();
+            menuToggle.focus();
+        }
+    });
+}

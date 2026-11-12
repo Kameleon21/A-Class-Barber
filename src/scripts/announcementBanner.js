@@ -1,19 +1,9 @@
 export function initAnnouncementBanner() {
-    const content = document.querySelector('.announcement-content');
-    if (!content) return;
+    const track = document.querySelector('.announcement-track');
+    const content = track?.querySelector('.announcement-content');
+    if (!track || !content) return;
 
-    // Calculate total width to adjust animation duration
-    const totalWidth = content.scrollWidth;
-    const duration = Math.max(20, totalWidth / 100); // Adjust speed based on content width
-    content.style.animationDuration = `${duration}s`;
+    // Constant reading speed whatever the amount of text
+    const pixelsPerSecond = 55;
+    track.style.animationDuration = `${Math.max(20, content.scrollWidth / pixelsPerSecond)}s`;
 }
-
-// Initialize when the module is imported
-if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-        initAnnouncementBanner();
-    });
-} else {
-    // Fallback for browsers that don't support requestIdleCallback
-    setTimeout(initAnnouncementBanner, 0);
-} 
