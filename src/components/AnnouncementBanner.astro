@@ -1,21 +1,21 @@
 ---
 import '../styles/announcement.css';
 const announcements = [
-    "🎉 Student Discount: 10% off Monday-Thursday:9am-12pm Early Bird Deal",
-    "💈 First Time Customer: €5 off your first haircut",
-    "👥 Bring a friend and get 20% off both cuts",
-    "🎫 Loyalty Card: Ask Staff for details"
+    "Student Discount: 10% off Monday–Thursday, 9am–12pm Early Bird Deal",
+    "First Time Customer: €5 off your first haircut",
+    "Bring a friend and get 20% off both cuts",
+    "Loyalty Card: ask staff for details"
 ];
 ---
 
-<div class="announcement-banner">
+<div class="announcement-banner" role="region" aria-label="Current offers">
     <div class="announcement-track">
         <div class="announcement-content">
             {announcements.map((text) => (
                 <span>{text}</span>
             ))}
         </div>
-        <div class="announcement-content">
+        <div class="announcement-content" aria-hidden="true">
             {announcements.map((text) => (
                 <span>{text}</span>
             ))}

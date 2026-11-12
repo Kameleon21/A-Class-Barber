@@ -3,7 +3,8 @@
     height: 40px;
     overflow: hidden;
     position: relative;
-    background-color: white;
+    background-color: var(--gold-soft);
+    color: var(--ink);
 }
 
 .announcement-track {
@@ -11,7 +12,7 @@
     display: flex;
     width: max-content;
     height: 100%;
-    animation: scroll 20s linear infinite;
+    animation: scroll 40s linear infinite;
 }
 
 .announcement-content {
@@ -20,10 +21,23 @@
 }
 
 .announcement-content span {
-    display: inline-block;
-    padding: 0 2rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 1.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     white-space: nowrap;
+}
+
+.announcement-content span::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin-right: 3.5rem;
+    background: var(--ink);
+    transform: rotate(45deg);
 }
 
 @keyframes scroll {
@@ -39,8 +53,13 @@
     animation-play-state: paused;
 }
 
-@media (max-width: 768px) {
-    .announcement-track {
-        animation-duration: 15s;
+@media (prefers-reduced-motion: reduce) {
+    .announcement-banner {
+        overflow-x: auto;
     }
-} 
+
+    .announcement-track {
+        position: static;
+        animation: none;
+    }
+}

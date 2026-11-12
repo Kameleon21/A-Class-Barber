@@ -1,0 +1,16 @@
+---
+interface Props {
+    title: string;
+    tone?: 'gold' | 'white';
+}
+
+const { title, tone = 'gold' } = Astro.props;
+---
+
+<div class="reveal text-center mb-16 flex flex-col items-center gap-5">
+    <span class="ornament" aria-hidden="true"></span>
+    <h2 class={`text-4xl md:text-5xl font-serif font-extrabold tracking-wide ${tone === 'gold' ? 'text-tertiary' : 'text-white'}`}>
+        {title}
+    </h2>
+    <span class="w-32 h-px bg-tertiary" aria-hidden="true"></span>
+</div>

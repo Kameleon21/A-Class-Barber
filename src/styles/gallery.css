@@ -4,8 +4,16 @@
     padding: 1rem 0;
 }
 
+.gallery-viewport {
+    overflow: hidden;
+    padding: 0.75rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
 .gallery-track {
     display: flex;
+    width: max-content;
     gap: 1.5rem;
     will-change: transform;
     /* Optional: Remove the .3s ease-out transition if you prefer a smoother continuous scroll
@@ -17,23 +25,16 @@
     width: 300px;
     height: 400px;
     object-fit: cover;
+    flex-shrink: 0;
     border-radius: 0.5rem;
-    transition: transform 0.3s ease;
+    filter: saturate(0.85);
+    transition: transform 0.4s ease, filter 0.4s ease, box-shadow 0.4s ease;
 }
 
 .gallery-image:hover {
-    transform: scale(1.05);
-}
-
-.gallery-prev,
-.gallery-next {
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-.gallery-prev:hover,
-.gallery-next:hover {
-    opacity: 1;
+    transform: scale(1.03);
+    filter: saturate(1);
+    box-shadow: 0 0 0 1px var(--gold-soft);
 }
 
 /* Responsive adjustments */
@@ -60,5 +61,9 @@
     
     .gallery-image:hover {
         transform: none;
+    }
+
+    .gallery-viewport {
+        overflow-x: auto;
     }
 }

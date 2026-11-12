@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import aClassLogo from '../assets/aClassLogo.jpg';
+import { openingHours, socialLinks, contactInfo } from '../data/contact.js';
+
+const telHref = `tel:${contactInfo.phone.replace(/\s/g, '')}`;
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-black text-secondary border-t border-tertiary/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-8 py-16 grid gap-12 md:grid-cols-3 text-center md:text-left">
+        <div class="flex flex-col items-center md:items-start gap-4">
+            <Image
+                src={aClassLogo}
+                alt="A-Class Turkish Barbers"
+                width={96}
+                height={96}
+                class="w-20 h-20 rounded-full"
+                loading="lazy"
+                format="webp"
+            />
+            <p class="font-serif italic text-xl text-tertiary">At A-Class, we do class.</p>
+            <p class="text-sm uppercase tracking-[0.3em]">Waterford · Est. 2017</p>
+        </div>
+
+        <div>
+            <h2 class="font-serif text-xl text-white mb-5">Opening Hours</h2>
+            <dl class="space-y-1.5 max-w-[16rem] mx-auto md:mx-0">
+                {openingHours.map(({ day, hours }) => (
+                    <div class="flex justify-between gap-6">
+                        <dt>{day}</dt>
+                        <dd>{hours}</dd>
+                    </div>
+                ))}
+            </dl>
+        </div>
+
+        <div class="flex flex-col items-center md:items-start gap-3">
+            <h2 class="font-serif text-xl text-white mb-2">Visit Us</h2>
+            <address class="not-italic">{contactInfo.address}</address>
+            <a href={telHref} class="nav-link text-white hover:text-tertiary transition-colors">{contactInfo.phone}</a>
+            <div class="flex gap-5 mt-3">
+                {socialLinks.map(({ platform, icon, url }) => (
+                    <a
+                        href={url}
+                        class="text-tertiary hover:text-white transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`A-Class Barbers on ${platform}`}
+                    >
+                        <Icon name={icon} class="w-7 h-7" />
+                    </a>
+                ))}
+            </div>
+        </div>
+    </div>
+    <p class="border-t border-white/10 py-6 text-center text-sm text-secondary/70">
+        © {year} A-Class Turkish Barbers, Waterford
+    </p>
+</footer>
