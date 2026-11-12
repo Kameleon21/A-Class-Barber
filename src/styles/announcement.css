@@ -31,15 +31,6 @@
     white-space: nowrap;
 }
 
-.announcement-content span::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    margin-right: 3.5rem;
-    background: var(--ink);
-    transform: rotate(45deg);
-}
-
 @keyframes scroll {
     0% {
         transform: translateX(0);
