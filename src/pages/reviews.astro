@@ -205,7 +205,7 @@ import { format } from 'timeago.js';
         const relativeTime = format(review.date);
         
         card.innerHTML = `
-            <p class="text-black text-lg italic mb-6 flex-grow">"${review.text}"</p>
+            <p class="text-black text-lg italic mb-6 flex-grow"></p>
             <div class="flex gap-1 mb-4">
                 ${Array.from({ length: 5 }).map((_, i) => `
                     <svg class="w-6 h-6 ${i < review.rating ? 'text-[#c19d65]' : 'text-gray-400'}" 
@@ -223,11 +223,14 @@ import { format } from 'timeago.js';
                     </svg>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-black font-medium">${review.authorName}</span>
+                    <span class="text-black font-medium"></span>
                     <span class="text-gray-600 text-sm">${relativeTime}</span>
                 </div>
             </div>
         `;
+        
+        card.querySelector('p').textContent = `"${review.text}"`;
+        card.querySelector('span.text-black').textContent = review.authorName;
         
         return card;
     }
