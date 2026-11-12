@@ -5,7 +5,7 @@ export const openingHours = [
     { day: "Thursday", hours: "9am - 7pm" },
     { day: "Friday", hours: "9am - 7pm" },
     { day: "Saturday", hours: "9am - 6pm" },
-    { day: "Sunday", hours: "12am - 5pm" }
+    { day: "Sunday", hours: "12pm - 5pm" }
 ];
 
 export const socialLinks = [

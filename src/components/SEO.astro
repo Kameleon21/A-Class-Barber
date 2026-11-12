@@ -16,9 +16,54 @@ const {
 const siteInfo = {
     name: "A-Class Barber",
     location: "Waterford, Ireland",
-    phone: "+353 123 456 789", 
+    phone: "+353 83 125 6089", 
     address: "3 Conduit Ln, Waterford, E91 EY05", 
 }
+
+const absoluteOgImage = new URL(ogImage, Astro.site).href;
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "BarberShop",
+    "name": siteInfo.name,
+    "image": absoluteOgImage,
+    "url": new URL("/", Astro.site).href,
+    "telephone": siteInfo.phone,
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "3 Conduit Ln",
+        "addressLocality": "Waterford",
+        "postalCode": "E91 EY05",
+        "addressCountry": "IE"
+    },
+    "priceRange": "€€",
+    "openingHoursSpecification": [
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday"],
+            "opens": "09:00",
+            "closes": "18:00"
+        },
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "19:00"
+        },
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "18:00"
+        },
+        {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Sunday",
+            "opens": "12:00",
+            "closes": "17:00"
+        }
+    ]
+};
 ---
 
 <!-- Essential Meta Tags -->
@@ -26,58 +71,29 @@ const siteInfo = {
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content={description} />
 <meta name="robots" content="index, follow" />
+<title>{title}</title>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:image" content={absoluteOgImage} />
 <meta property="og:site_name" content={siteInfo.name} />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteOgImage} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" href="/favicon.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
 <!-- Local Business Schema -->
-<script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BarberShop",
-        "name": "${siteInfo.name}",
-        "image": "${ogImage}",
-        "url": "${canonicalURL}",
-        "telephone": "${siteInfo.phone}",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "${siteInfo.address}",
-            "addressLocality": "Waterford",
-            "addressCountry": "IE"
-        },
-        "priceRange": "€€",
-        "openingHoursSpecification": [
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "09:00",
-                "closes": "18:00"
-            },
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": "Saturday",
-                "opens": "09:00",
-                "closes": "17:00"
-            }
-        ]
-    }
-</script> 
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
